@@ -39,28 +39,29 @@ class PlayerController extends Controller
 
     public function store()
     {
-        $request = request()->all();
-        //Validate
-        $validate = validator($request, [
-            'first_name' => 'required|max:128',
-            'last_name' => 'required|max:128',
-            'team_id' => 'required|max:128',
-        ], [], [
-            'first_name' => "Name",
-            'last_name' => "Family",
-            'team_id' => "Team",
-        ]);
-        if ($validate->fails()) {
-            return response()->json([
-                'errors' => $validate->errors()
-            ], $this->bad_request);
-        }
 
-        // add new team
         try {
+            $request = request()->all();
+            //Validate
+            $validate = validator($request, [
+                'first_name' => 'required|max:128',
+                'last_name' => 'required|max:128',
+                'team_id' => 'required|max:128',
+            ], [], [
+                'first_name' => "Name",
+                'last_name' => "Family",
+                'team_id' => "Team",
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'errors' => $validate->errors()
+                ], $this->bad_request);
+            }
+
 
             $team = Team::find($request['team_id']);
 
+            # add new team
             if ($team) {
                 $obj = new Player();
                 $obj->first_name = $request['first_name'];
@@ -87,23 +88,23 @@ class PlayerController extends Controller
 
     public function update(Player $player)
     {
-        //Validate
-        $validate = validator(request()->all(), [
-            'first_name' => 'required|max:128',
-            'last_name' => 'required|max:128',
-            'team_id' => 'required|max:128',
-        ], [], [
-            'first_name' => "Name",
-            'last_name' => "Family",
-            'team_id' => "Team",
-        ]);
-        if ($validate->fails()) {
-            return response()->json([
-                'errors' => $validate->errors()
-            ], $this->bad_request);
-        }
-
         try {
+            //Validate
+            $validate = validator(request()->all(), [
+                'first_name' => 'required|max:128',
+                'last_name' => 'required|max:128',
+                'team_id' => 'required|max:128',
+            ], [], [
+                'first_name' => "Name",
+                'last_name' => "Family",
+                'team_id' => "Team",
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'errors' => $validate->errors()
+                ], $this->bad_request);
+            }
+
             $team = Team::find(request('team_id'));
 
             // check team...

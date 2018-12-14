@@ -21,8 +21,8 @@ class TeamController extends Controller
             $teams = Team::latest()->paginate($this->paginate);
             $teams = TeamResource::collection($teams);
             return $teams;
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
@@ -31,34 +31,34 @@ class TeamController extends Controller
         try {
             $team = new TeamResource($team);
             return $team;
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
     public function store()
     {
-        $request = request()->all();
-        //Validate
-        $validate = validator($request, [
-            'name' => 'required|max:128',
-        ]);
-        if ($validate->fails()) {
-            return response()->json([
-                'errors' => $validate->errors()
-            ], $this->bad_request);
-        }
-
-        // add new team
         try {
+            $request = request()->all();
+            # Validate
+            $validate = validator($request, [
+                'name' => 'required|max:128',
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'errors' => $validate->errors()
+                ], $this->bad_request);
+            }
+
+            # add new team
             $obj = new Team;
             $obj->name = $request['name'];
             $obj->save();
             return response()->json([
                 'Successfully added...'
             ], $this->status_success);
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
