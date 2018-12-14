@@ -22,8 +22,8 @@ class PlayerController extends Controller
             $players = Player::latest()->paginate($this->paginate);
             $players = PlayerResource::collection($players);
             return $players;
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
@@ -32,8 +32,8 @@ class PlayerController extends Controller
         try {
             $player = new PlayerResource($player);
             return $player;
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
@@ -80,8 +80,8 @@ class PlayerController extends Controller
 
 
             return $response;
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
@@ -122,8 +122,8 @@ class PlayerController extends Controller
                 ], $this->status_success);
             }
             return $response;
-        } catch (Exception $ex) {
-            return $ex;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
 
 
