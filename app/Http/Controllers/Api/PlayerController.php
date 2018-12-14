@@ -23,7 +23,7 @@ class PlayerController extends Controller
             $players = PlayerResource::collection($players);
             return $players;
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
         }
     }
 
@@ -33,13 +33,12 @@ class PlayerController extends Controller
             $player = new PlayerResource($player);
             return $player;
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
         }
     }
 
     public function store()
     {
-
         try {
             $request = request()->all();
             //Validate
@@ -78,18 +77,16 @@ class PlayerController extends Controller
                     'Team not found'
                 ], $this->status_error);
             }
-
-
             return $response;
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
         }
     }
 
     public function update(Player $player)
     {
         try {
-            //Validate
+            # Validate
             $validate = validator(request()->all(), [
                 'first_name' => 'required|max:128',
                 'last_name' => 'required|max:128',
@@ -124,10 +121,8 @@ class PlayerController extends Controller
             }
             return $response;
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
         }
-
-
     }
 }
    
